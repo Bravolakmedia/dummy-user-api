@@ -5,7 +5,7 @@ const fetch = require("node-fetch");
 const app = express();
 app.use(cors());
 
-const PORT = process.env.PORT || 8080; // Render assigns a dynamic port
+const PORT = process.env.PORT || 8080;
 
 // Fetch 20 users
 app.get("/api/users", async (req, res) => {
