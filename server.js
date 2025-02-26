@@ -1,36 +1,30 @@
 const express = require("express");
+const axios = require("axios");
 const cors = require("cors");
-const fetch = require("node-fetch");
 
 const app = express();
 app.use(cors());
 
-const PORT = process.env.PORT || 8080;
+const PORT = 8080;
 
-// Fetch 20 users
+// Fetch users from DummyJSON API
 app.get("/api/users", async (req, res) => {
   try {
-    const response = await fetch("https://dummyjson.com/users?limit=20");
-    const data = await response.json();
-    res.json(data.users);
+    const response = await axios.get("https://dummyjson.com/users?limit=20");
+    res.json(response.data.users);
   } catch (error) {
-    res.status(500).json({ message: "Server Error" });
+    res.status(500).json({ message: "Error fetching users", error: error.message });
   }
 });
 
-// Fetch single user
+// Fetch user by ID
 app.get("/api/users/:id", async (req, res) => {
   try {
-    const { id } = req.params;
-    const response = await fetch(`https://dummyjson.com/users/${id}`);
-    const user = await response.json();
-    res.json(user);
+    const response = await axios.get(`https://dummyjson.com/users/${req.params.id}`);
+    res.json(response.data);
   } catch (error) {
-    res.status(500).json({ message: "Server Error" });
+    res.status(500).json({ message: "Error fetching user", error: error.message });
   }
 });
 
-// ✅ Start the server on Render
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
