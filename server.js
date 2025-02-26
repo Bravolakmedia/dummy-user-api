@@ -5,6 +5,8 @@ const fetch = require("node-fetch");
 const app = express();
 app.use(cors());
 
+const PORT = process.env.PORT || 8080; // Render assigns a dynamic port
+
 // Fetch 20 users
 app.get("/api/users", async (req, res) => {
   try {
@@ -28,4 +30,7 @@ app.get("/api/users/:id", async (req, res) => {
   }
 });
 
-module.exports = app; // ✅ Export the Express app for Vercel
+// ✅ Start the server on Render
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
