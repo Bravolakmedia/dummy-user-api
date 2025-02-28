@@ -1,9 +1,10 @@
-const express = require("express");
-const axios = require("axios");
-const cors = require("cors");
+import express from "express";
+import cors from "cors";
+import axios from "axios";
 
 const app = express();
 app.use(cors());
+
 
 const PORT = 8080;
 
@@ -19,6 +20,7 @@ app.get("/api/users", async (req, res) => {
 
 // Fetch user by ID
 app.get("/api/users/:id", async (req, res) => {
+  
   try {
     const response = await axios.get(`https://dummyjson.com/users/${req.params.id}`);
     res.json(response.data);
@@ -28,3 +30,5 @@ app.get("/api/users/:id", async (req, res) => {
 });
 
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+
+export default app;
